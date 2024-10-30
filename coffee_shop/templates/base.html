@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="with=device-width, initial-scale=1.0">
+    <title> Coffee shop</title>
+
+    <body>
+        Hola, 
+        {% if user.is_authenticated %}
+        {{ user.username }}
+
+        {% else %}
+        <a href=" {% url "login" %}">Login</a>
+        {% endif %}
+        {% block content %} 
+        Hola
+
+        {% endblock content %}
+    </body>
+</head>

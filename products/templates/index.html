@@ -1,0 +1,94 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Café Aroma - Tu rincón de café favorito</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'cafe-claro': '#f5e5d5',
+                        'cafe-medio': '#d2b48c',
+                        'cafe-oscuro': '#6b4423',
+                        'cafe-texto': '#4a3728',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-cafe-claro text-cafe-texto font-sans">
+    <header class="bg-cafe-oscuro text-cafe-claro text-center py-6">
+        <h1 class="text-4xl font-bold">Café Aroma</h1>
+        <p class="mt-2">Tu rincón de café favorito</p>
+    </header>
+    
+    <nav class="bg-cafe-medio py-4">
+        <ul class="flex justify-center space-x-6">
+            <li><a href="{% url 'home' %}" class="hover:text-cafe-oscuro">Inicio</a></li>
+            <li><a href="#menu" class="hover:text-cafe-oscuro">Menú</a></li>
+            <li><a href="#ubicacion" class="hover:text-cafe-oscuro">Ubicación</a></li>
+            <li><a href="#contacto" class="hover:text-cafe-oscuro">Contacto</a></li>
+        </ul>
+    </nav>
+
+    <main class="max-w-4xl mx-auto mt-8 p-6 bg-white shadow-lg rounded-lg">
+        <section id="menu">
+            <h2 class="text-3xl font-semibold mb-6">Nuestro Menú</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                {% for product in products %}
+                <div class="bg-cafe-medio p-4 rounded-lg text-center">
+                    {% if product.image %}
+                        <img src="{{ product.image.url }}" alt="{{ product.name }}" class="w-full h-40 object-cover rounded-lg mb-4">
+                    {% else %}
+                        <div class="w-full h-40 bg-cafe-claro rounded-lg mb-4 flex items-center justify-center">
+                            <span class="text-cafe-oscuro">Sin imagen</span>
+                        </div>
+                    {% endif %}
+                    <h3 class="text-xl font-semibold">{{ product.name }}</h3>
+                    <p>{{ product.description }}</p>
+                    <p class="mt-2 font-bold">{{ product.price }} €</p>
+                </div>
+                {% empty %}
+                <p class="col-span-4 text-center">No hay productos disponibles en este momento.</p>
+                {% endfor %}
+            </div>
+        </section>
+
+        <section id="ubicacion" class="mt-12">
+            <h2 class="text-3xl font-semibold mb-6">Nuestra Ubicación</h2>
+            <div class="aspect-w-16 aspect-h-9">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12345.67890!2d-0.1276!3d51.5074!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNTHCsDMwJzI2LjYiTiAwwrAwNyc0MC4yIlc!5e0!3m2!1sen!2sus!4v1234567890" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+        </section>
+
+        <section id="contacto" class="mt-12">
+            <h2 class="text-3xl font-semibold mb-6">Contáctanos</h2>
+            <form action="{% url 'contact' %}" method="POST" class="space-y-4">
+                {% csrf_token %}
+                <div>
+                    <label for="nombre" class="block mb-1">Nombre:</label>
+                    <input type="text" id="nombre" name="nombre" required class="w-full p-2 border border-cafe-medio rounded">
+                </div>
+                <div>
+                    <label for="email" class="block mb-1">Email:</label>
+                    <input type="email" id="email" name="email" required class="w-full p-2 border border-cafe-medio rounded">
+                </div>
+                <div>
+                    <label for="mensaje" class="block mb-1">Mensaje:</label>
+                    <textarea id="mensaje" name="mensaje" required class="w-full p-2 border border-cafe-medio rounded h-32"></textarea>
+                </div>
+                <button type="submit" class="bg-cafe-oscuro text-cafe-claro py-2 px-4 rounded hover:bg-cafe-medio hover:text-cafe-oscuro transition duration-300">Enviar Mensaje</button>
+            </form>
+        </section>
+    </main>
+
+    <footer class="bg-cafe-oscuro text-cafe-claro text-center py-4 mt-12">
+        <p>&copy; 2023 Café Aroma. Todos los derechos reservados.</p>
+    </footer>
+</body>
+</html>
