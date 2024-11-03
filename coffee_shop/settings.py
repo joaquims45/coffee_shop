@@ -84,7 +84,7 @@ WSGI_APPLICATION = "coffee_shop.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "gentback", 
+        "NAME": "coffee_shop", 
         "USER": "postgres",               
         "PASSWORD": "miespejo20",            
         "HOST": "localhost",               
@@ -151,3 +151,7 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
     ]
 }
+
+# Configuración de archivos media
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
