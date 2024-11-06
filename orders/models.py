@@ -29,7 +29,7 @@ class OrderProduct(models.Model):
 
     def __str__(self):
         return f"{self.order} - {self.product}"
-    
+        
 
 class Ticket(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
