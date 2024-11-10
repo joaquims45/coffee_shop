@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <h1 class="text-2xl font-bold mb-6">Panel de Administración</h1>
+    
+    <!-- Formulario de nuevo producto -->
+    <div class="bg-white shadow-md rounded-lg px-8 pt-6 pb-8 mb-8">
+        <h2 class="text-xl font-semibold mb-4">Agregar Nuevo Producto</h2>
+        <form method="post" action="{% url 'agregar_producto' %}" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <button type="submit" class="mt-4 bg-blue-600 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded-lg transition duration-200">
+                Agregar producto
+            </button>
+        </form>
+    </div>
+
+    <!-- Lista de productos -->
+    <div class="bg-white shadow-md rounded-lg px-8 pt-6 pb-8">
+        <h2 class="text-xl font-semibold mb-4">Lista de Productos</h2>
+        <div class="overflow-x-auto">
+            <table class="min-w-full table-auto">
+                <thead class="bg-gray-200">
+                    <tr>
+                        <th class="px-4 py-2">Foto</th>
+                        <th class="px-4 py-2">Nombre</th>
+                        <th class="px-4 py-2">Descripción</th>
+                        <th class="px-4 py-2">Precio</th>
+                        <th class="px-4 py-2">Disponible</th>
+                        <th class="px-4 py-2">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for product in products %}
+                    <tr class="border-b hover:bg-gray-100">
+                        <td class="px-4 py-2">
+                            {% if product.photo %}
+                                <img src="{{ product.photo.url }}" alt="{{ product.name }}" class="w-16 h-16 object-cover rounded">
+                            {% else %}
+                                <span class="text-gray-400">Sin imagen</span>
+                            {% endif %}
+                        </td>
+                        <td class="px-4 py-2">{{ product.name }}</td>
+                        <td class="px-4 py-2">{{ product.description }}</td>
+                        <td class="px-4 py-2">${{ product.price }}</td>
+                        <td class="px-4 py-2">
+                            {% if product.available %}
+                                <span class="text-green-500">Disponible</span>
+                            {% else %}
+                                <span class="text-red-500">No disponible</span>
+                            {% endif %}
+                        </td>
+                        <td class="px-4 py-2">
+                            <a href="{% url 'editar_producto' product.id %}" class="text-blue-600 hover:text-blue-800 mr-2">Editar</a>
+                            <a href="{% url 'borrar_producto' product.id %}" class="text-red-600 hover:text-red-800">Borrar</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

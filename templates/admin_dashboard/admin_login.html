@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <h1 class="text-2xl font-bold mb-6">Login de Administrador</h1>
+    <div class="bg-white shadow-md rounded-lg px-8 pt-6 pb-8">
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="mt-4 bg-blue-600 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded-lg transition duration-200">
+                Iniciar sesión
+            </button>
+        </form>
+    </div>
+</div>
+{% endblock %}
+

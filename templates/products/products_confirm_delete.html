@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <form method="post">
+        {% csrf_token %}
+        <p>¿Estás seguro de que quieres eliminar "{{ object.name }}"?</p>
+        <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+            Confirmar eliminación
+        </button>
+        <a href="{% url 'admin_dashboard' %}" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">
+            Cancelar
+        </a>
+    </form>
+</div>
+{% endblock %} 
